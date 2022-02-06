@@ -10,6 +10,7 @@ pub fn lambda_handler(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let func_name = &func.sig.ident;
 
     let tokens = quote::quote! {
+        use std::str::FromStr;
         #func
 
         #[tokio::main]
