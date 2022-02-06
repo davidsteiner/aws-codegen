@@ -23,6 +23,7 @@ It has been tested with the following versions:
 ```toml
 [dependencies]
 lambda_runtime = "0.4.1"
+tokio = { version = "1.5.0", features = ["parking_lot"] }
 tracing = { version = "0.1.30", features = ["std"] }
 tracing-futures = "0.2.5"
 tracing-subscriber = "0.2.18"
