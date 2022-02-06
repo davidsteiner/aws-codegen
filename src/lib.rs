@@ -10,12 +10,12 @@ pub fn lambda_handler(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let func_name = &func.sig.ident;
 
     let tokens = quote::quote! {
-        use std::str::FromStr;
         #func
 
         #[tokio::main]
         #[tracing::instrument]
         async fn main() -> Result<(), lambda_runtime::Error> {
+            use std::str::FromStr;
             let log_env = std::env::var_os("LOG_LEVEL")
                 .and_then(|val| val.to_str().map(|str| str.to_owned()))
                 .unwrap_or_else(|| "info".to_owned());
