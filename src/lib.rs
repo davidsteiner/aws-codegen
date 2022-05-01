@@ -16,19 +16,17 @@ pub fn lambda_handler(_attr: TokenStream, item: TokenStream) -> TokenStream {
         #[tracing::instrument]
         async fn main() -> Result<(), lambda_runtime::Error> {
             use std::str::FromStr;
-            let log_env = std::env::var_os("LOG_LEVEL")
-                .and_then(|val| val.to_str().map(|str| str.to_owned()))
-                .unwrap_or_else(|| "info".to_owned());
-            let log_level = tracing::Level::from_str(&log_env)?;
-
+            let log_level = std::env::var("LOG_LEVEL")
+                .ok()
+                .and_then(|lvl| tracing::Level::from_str(&lvl).ok())
+                .unwrap_or(Level::INFO);
             tracing_subscriber::fmt()
                 .with_max_level(log_level)
                 .json()
                 .init();
 
-            let handler = lambda_runtime::handler_fn(#func_name);
-            lambda_runtime::run(handler).await?;
-
+            let func = service_fn(#func_name);
+            lambda_runtime::run(func).await?;
             Ok(())
         }
     };
