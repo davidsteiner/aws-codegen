@@ -19,7 +19,7 @@ pub fn lambda_handler(_attr: TokenStream, item: TokenStream) -> TokenStream {
             let log_level = std::env::var("LOG_LEVEL")
                 .ok()
                 .and_then(|lvl| tracing::Level::from_str(&lvl).ok())
-                .unwrap_or(Level::INFO);
+                .unwrap_or(tracing::Level::INFO);
             tracing_subscriber::fmt()
                 .with_max_level(log_level)
                 .json()
