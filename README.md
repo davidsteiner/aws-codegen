@@ -7,7 +7,7 @@ creating a Lambda handler with tracing enabled using
 
 ```rust
 use aws_codegen::lambda_handler;
-use lambda_runtime::{service_fn, LambdaEvent, Error};
+use lambda_runtime::{Error, LambdaEvent};
 use serde_json::{json, Value};
 
 #[lambda_handler]

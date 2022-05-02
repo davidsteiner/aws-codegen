@@ -25,7 +25,7 @@ pub fn lambda_handler(_attr: TokenStream, item: TokenStream) -> TokenStream {
                 .json()
                 .init();
 
-            let func = service_fn(#func_name);
+            let func = lambda_runtime::service_fn(#func_name);
             lambda_runtime::run(func).await?;
             Ok(())
         }
